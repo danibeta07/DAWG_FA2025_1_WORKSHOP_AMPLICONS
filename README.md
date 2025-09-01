@@ -22,14 +22,14 @@ library(ggplot2)
 library(dplyr)
 library(vegan)
 library(knitr)
-#setwd("/storage/group/efc5279/default/DaniB/DAWG/FA2025/1_workshop_amplicons")
+#setwd("/storage/home/dkb5890/scratch/1_workshop_amplicons")
 ```
 
 # 16S 
 ## Define file paths
 
 ``` r
-#base_path <- "/storage/group/efc5279/default/DaniB/DAWG/FA2025/1_workshop_amplicons"
+#base_path <- "/storage/home/dkb5890/scratch/1_workshop_amplicons"
 path_16S <- file.path(base_path, "16S_FASTQ")
 filt_path_16S <- file.path(base_path, "16S_filtered")
 taxa_db_16S <- file.path(base_path, "silva_nr99_v138.1_train_set.fa")
