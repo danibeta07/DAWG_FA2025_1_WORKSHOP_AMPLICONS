@@ -22,7 +22,6 @@ library(ggplot2)
 library(dplyr)
 library(vegan)
 library(knitr)
-setwd("~/Downloads/1_workshop_amplicons")
 #setwd("/storage/group/efc5279/default/DaniB/DAWG/FA2025/1_workshop_amplicons")
 ```
 
@@ -30,7 +29,6 @@ setwd("~/Downloads/1_workshop_amplicons")
 ## Define file paths
 
 ``` r
-base_path <- "~/Downloads/1_workshop_amplicons"
 #base_path <- "/storage/group/efc5279/default/DaniB/DAWG/FA2025/1_workshop_amplicons"
 path_16S <- file.path(base_path, "16S_FASTQ")
 filt_path_16S <- file.path(base_path, "16S_filtered")
