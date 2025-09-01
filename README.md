@@ -26,7 +26,8 @@ setwd("~/Downloads/1_workshop_amplicons")
 #setwd("/storage/group/efc5279/default/DaniB/DAWG/FA2025/1_workshop_amplicons")
 ```
 
-\#16S \## Define file paths
+# 16S 
+## Define file paths
 
 ``` r
 base_path <- "~/Downloads/1_workshop_amplicons"
@@ -100,13 +101,13 @@ seqtab_16S <- makeSequenceTable(mergers_16S)
 seqtab.nochim_16S <- removeBimeraDenovo(seqtab_16S, method = "consensus", multithread = TRUE, verbose = TRUE)
 ```
 
-\##Taxononmy classification
+## Taxononmy classification
 
 ``` r
 taxa_16S <- assignTaxonomy(seqtab.nochim_16S, taxa_db_16S, multithread = TRUE)
 ```
 
-\##Phyloseq object
+## Phyloseq object
 
 ``` r
 metadata_path <- file.path(base_path, "filtered_metadata.csv")
@@ -123,7 +124,8 @@ saveRDS(ps_16S, file = file.path(base_path, "16S_phyloseq_object.rds"))
 print(ps_16S)
 ```
 
-\#ITS \## Define file paths
+# ITS 
+## Define file paths
 
 ``` r
 path_ITS <- file.path(base_path, "ITS_FASTQ")
@@ -185,13 +187,13 @@ seqtab_ITS <- makeSequenceTable(mergers_ITS)
 seqtab.nochim_ITS <- removeBimeraDenovo(seqtab_ITS, method = "consensus", multithread = TRUE, verbose = TRUE)
 ```
 
-\##Taxononmy classification
+## Taxononmy classification
 
 ``` r
 taxa_ITS <- assignTaxonomy(seqtab.nochim_ITS, taxa_db_ITS, multithread = TRUE)
 ```
 
-\##Phyloseq object
+## Phyloseq object
 
 ``` r
 metadata_path <- file.path(base_path, "filtered_metadata.csv")
@@ -208,7 +210,8 @@ saveRDS(ps_ITS, file = file.path(base_path, "ITS_phyloseq_object.rds"))
 print(ps_ITS)
 ```
 
-\##Data Analysis \###Alpha diversity 16S
+## Data Analysis 
+### Alpha diversity 16S
 
 ``` r
 #Load phyloseq objects
@@ -236,7 +239,7 @@ print(p_alpha_16S)
 ```
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
-\###Beta diversity 16S
+### Beta diversity 16S
 
 ``` r
 # Beta diversity measures the differences between samples. We will use PCoA
@@ -262,7 +265,7 @@ print(p_pcoa_16S)
 ```
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
-\###Relative abundance 16S
+### Relative abundance 16S
 
 ``` r
 # Transform counts to relative abundance and agglomerate at the Phylum level
@@ -295,7 +298,7 @@ print(p_bar_16S)
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
-\###Alpha diversity ITS
+### Alpha diversity ITS
 
 ``` r
 p_alpha_ITS <- plot_richness(ps_ITS, x = "Disease", measures = c("Observed", "Shannon")) +
@@ -309,7 +312,7 @@ print(p_alpha_ITS)
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
-\###Beta diversity ITS
+### Beta diversity ITS
 
 ``` r
 # Normalize counts and calculate Bray-Curtis distance
@@ -333,7 +336,7 @@ print(p_pcoa_ITS)
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
-\###Relative abundance ITS
+### Relative abundance ITS
 
 ``` r
 ps_phylum_ITS <- tax_glom(ps_ITS_pruned, taxrank = "Phylum")
@@ -359,7 +362,7 @@ print(p_bar_ITS)
 
 ![](amplicons_workshop_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
-\###FUNGuild
+### FUNGuild
 
 ``` r
 otu_table_its <- as.data.frame(otu_table(ps_ITS))
@@ -388,7 +391,7 @@ corrected_output_path <- file.path(base_path, "FUNGuild_corrected_input.txt")
 write.table(otu_table_with_taxonomy, file = corrected_output_path, sep = "\t", row.names = FALSE, quote = FALSE)
 ```
 
-\###Run FUNGuild
+### Run FUNGuild
 
 ``` python
 cd ~/Downloads/1_workshop_amplicons/FUNGuild
@@ -397,7 +400,7 @@ python Guilds_v1.1.py -otu ~/Downloads/1_workshop_amplicons/FUNGuild_corrected_i
 #Result saved to '/Users/daniela/Downloads/1_workshop_amplicons/FUNGuild_input_taxa.guilds.txt'
 ```
 
-\###Plot FUNGuild results
+### Plot FUNGuild results
 
 ``` r
 #Define paths
@@ -465,7 +468,7 @@ ggsave("Guilds.pdf", p_guilds, height = 10, width = 30)
     ## Warning: Removed 100 rows containing missing values or values outside the scale range
     ## (`geom_bar()`).
 
-\###Human associated
+### Human associated
 
 ``` r
 # Create a list of genera known to be associated with humans
@@ -535,7 +538,7 @@ ggsave("HumanFungi.pdf", p_human_fungi, height = 10, width = 30)
     ## (`stat_summary()`).
 
 ``` r
-##By Disease
+## By Disease
 p_human_fungi_by_disease <- ggplot(plot_data, aes(x = Genus, y = Abundance, fill = Genus)) +
   geom_bar(stat = "summary", fun = "mean") +
   facet_wrap(~Disease, scales = "free_y") + # Creates separate panels for Y and N
